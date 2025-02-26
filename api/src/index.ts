@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
-import productsRouter from './routes/products';
+import productsRouter from './routes/products/products.routes';
+import authRouter from './routes/auth/auth.routes';
 
 const PORT = 3000;
 
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/products', productsRouter);
+app.use('/auth', authRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server started on port ${PORT}`);

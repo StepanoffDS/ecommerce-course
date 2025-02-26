@@ -9,6 +9,7 @@ import {
 import { validateData } from '../../middlewares/validation.middleware';
 
 import { createProductSchema, updateProductSchema } from '../../db/schema';
+import { verifySeller, verifyToken } from '../../middlewares/auth.middleware';
 
 const router = Router();
 
@@ -16,10 +17,22 @@ router.get('/', getAllProducts);
 
 router.get('/:id', getProductById);
 
-router.post('/', validateData(createProductSchema), createProduct);
+router.post(
+	'/',
+	verifyToken,
+	verifySeller,
+	validateData(createProductSchema),
+	createProduct,
+);
 
-router.patch('/:id', validateData(updateProductSchema), updateProduct);
+router.patch(
+	'/:id',
+	verifyToken,
+	verifySeller,
+	validateData(updateProductSchema),
+	updateProduct,
+);
 
-router.delete('/:id', deleteProduct);
+router.delete('/:id', verifyToken, verifySeller, deleteProduct);
 
 export default router;
